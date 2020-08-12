@@ -2,6 +2,7 @@ package dev.teja.projectboard.controller;
 
 import dev.teja.projectboard.domain.ProjectTask;
 import dev.teja.projectboard.repository.ProjectTaskRepository;
+import dev.teja.projectboard.service.MapValidationErrorService;
 import dev.teja.projectboard.service.ProjectTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,18 +25,14 @@ public class ProjectTaskController {
     @Autowired
     public ProjectTaskRepository projectTaskRepository;
 
+    @Autowired
+    private MapValidationErrorService mapValidationErrorService;
+
 
     @PostMapping("")
     public ResponseEntity<?> addPTToBoard(@Valid @RequestBody ProjectTask projectTask, BindingResult result){
-
-        if(result.hasErrors()){
-            Map<String, String> errorMap = new HashMap<>();
-
-                for(FieldError error : result.getFieldErrors()){
-                    errorMap.put(error.getField(), error.getDefaultMessage());
-            }
-                return  new ResponseEntity<Map<String, String>>(errorMap,HttpStatus.BAD_REQUEST);
-        }
+        ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
+        if (errorMap!=null) return errorMap;
 
         ProjectTask newPT = projectTaskService.saveOrUpdateProjectTask(projectTask);
         return new ResponseEntity<ProjectTask>(newPT,HttpStatus.CREATED);
@@ -69,5 +66,6 @@ public class ProjectTaskController {
         projectTaskService.delete(id);
         return new  ResponseEntity<String>("Project task deleted successfully", HttpStatus.OK);
     }
+
 
 }

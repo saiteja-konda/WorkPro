@@ -1,6 +1,7 @@
 package dev.teja.projectboard.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -11,7 +12,7 @@ import java.util.Date;
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id =null;
     @NotBlank(message = "Project Name is required")
     private String projectName;
 
@@ -33,15 +34,20 @@ public class Project {
     @JsonFormat(pattern = "yyyy-mm-dd")
     private Date updated_At;
 
+    @JsonIgnore
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "project")
+    private Backlog backlog;
+
+
     public Project() {
 
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -110,4 +116,13 @@ public class Project {
     protected void onUpdate() {
         this.updated_At = new Date();
     }
+
+    public Backlog getBacklog() {
+        return backlog;
+    }
+
+    public void setBacklog(Backlog backlog) {
+        this.backlog = backlog;
+    }
+
 }

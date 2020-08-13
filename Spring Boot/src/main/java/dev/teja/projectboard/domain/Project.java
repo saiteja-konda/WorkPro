@@ -14,10 +14,12 @@ public class Project {
     private long id;
     @NotBlank(message = "Project Name is required")
     private String projectName;
+
     @NotBlank(message = "Project Id required")
-    @Size(min = 4,max = 5,message = "Please use 4 or 5 characters")
+    @Size(min = 4, max = 5, message = "Please use 4 or 5 characters")
     @Column(updatable = false, unique = true)
     private String projectIdentifier;
+
     @NotBlank(message = "Project Description is required")
     private String description;
 
@@ -27,15 +29,15 @@ public class Project {
     private Date end_date;
 
     @JsonFormat(pattern = "yyyy-mm-dd")
-    private  Date created_At;
+    private Date created_At;
     @JsonFormat(pattern = "yyyy-mm-dd")
     private Date updated_At;
 
-    public Project(){
+    public Project() {
 
     }
 
-    public long getId()  {
+    public long getId() {
         return id;
     }
 
@@ -100,12 +102,12 @@ public class Project {
     }
 
     @PrePersist
-    protected void onCreate(){
+    protected void onCreate() {
         this.created_At = new Date();
     }
 
     @PreUpdate
-    protected void onUpdate(){
+    protected void onUpdate() {
         this.updated_At = new Date();
     }
 }

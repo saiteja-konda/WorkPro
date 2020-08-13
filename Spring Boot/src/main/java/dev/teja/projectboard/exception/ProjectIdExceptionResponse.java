@@ -3,7 +3,7 @@ package dev.teja.projectboard.exception;
 public class ProjectIdExceptionResponse {
     private String projectIdentifier;
 
-    public  ProjectIdExceptionResponse(String projectIdentifier){
+    public ProjectIdExceptionResponse(String projectIdentifier) {
         this.projectIdentifier = projectIdentifier;
     }
 

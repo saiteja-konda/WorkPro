@@ -8,12 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -56,7 +53,7 @@ public class ProjectTaskController {
         assert projectTask != null;
         projectTask.setSummary(oldProjectTask.getSummary());
         projectTask.setStatus(oldProjectTask.getStatus());
-        projectTask.setAcceptenceCriteria(oldProjectTask.getAcceptenceCriteria());
+        projectTask.setAcceptanceCriteria(oldProjectTask.getAcceptanceCriteria());
 
         return projectTaskRepository.save(projectTask);
     }

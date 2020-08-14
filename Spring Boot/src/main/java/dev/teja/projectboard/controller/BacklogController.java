@@ -22,10 +22,9 @@ public class BacklogController {
     private MapValidationErrorService mapValidationErrorService;
 
 
-
     @PostMapping("/{backlog_id}")
     public ResponseEntity<?> addPTtoBacklog(@Valid @RequestBody ProjectTask projectTask,
-                                            BindingResult result, @PathVariable String backlog_id){
+                                            BindingResult result, @PathVariable String backlog_id) {
         //show delete
         //with custom exception
 
@@ -39,15 +38,26 @@ public class BacklogController {
     }
 
     @GetMapping("/{backlog_id}")
-    public Iterable<ProjectTask> getProjectBacklog(@PathVariable String backlog_id){
+    public Iterable<ProjectTask> getProjectBacklog(@PathVariable String backlog_id) {
 
         return projectTaskService.findBacklogById(backlog_id);
 
     }
 
     @GetMapping("/{backlog_id}/{pt_id}")
-    public ResponseEntity<?> getProjectTask(@PathVariable String backlog_id, @PathVariable String pt_id){
-        ProjectTask projectTask = projectTaskService.findPTByProjectSequence(backlog_id,pt_id);
+    public ResponseEntity<?> getProjectTask(@PathVariable String backlog_id, @PathVariable String pt_id) {
+        ProjectTask projectTask = projectTaskService.findPTByProjectSequence(backlog_id, pt_id);
+        return new ResponseEntity<ProjectTask>(projectTask, HttpStatus.OK);
+    }
+
+    @PatchMapping("/{backlog_id}/{pt_id}")
+    public ResponseEntity<?> updateProjectTask(@Valid @RequestBody ProjectTask projectTask,
+                                               BindingResult result, @PathVariable String backlog_id, @PathVariable String pt_id) {
+
+        ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
+        if (errorMap != null) return errorMap;
+        ProjectTask updateTask = projectTaskService.updateProjectSequence(projectTask,backlog_id,pt_id);
         return new ResponseEntity<ProjectTask>(projectTask,HttpStatus.OK);
     }
+
 }

@@ -2,8 +2,11 @@ package dev.teja.projectboard.service;
 
 import dev.teja.projectboard.controller.ProjectTaskController;
 import dev.teja.projectboard.domain.Backlog;
+import dev.teja.projectboard.domain.Project;
 import dev.teja.projectboard.domain.ProjectTask;
+import dev.teja.projectboard.exception.ProjectNotFoundException;
 import dev.teja.projectboard.repository.BacklogRepository;
+import dev.teja.projectboard.repository.ProjectRepository;
 import dev.teja.projectboard.repository.ProjectTaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,27 +20,34 @@ public class ProjectTaskService {
     public BacklogRepository backlogRepository;
 
     @Autowired
-    private ProjectService projectService;
+    public ProjectService projectService;
+
+    @Autowired
+    private ProjectRepository projectRepository;
 
     public ProjectTask addProjectTask(String projectIdentifier, ProjectTask projectTask) {
-        Backlog backlog = backlogRepository.findByProjectIdentifier(projectIdentifier);
-        projectTask.setBacklog(backlog);
+        try {
+            Backlog backlog = backlogRepository.findByProjectIdentifier(projectIdentifier);
+            projectTask.setBacklog(backlog);
 
-        Integer BacklogSequence = backlog.getPTSequence();
-        BacklogSequence++;
+            Integer BacklogSequence = backlog.getPTSequence();
+            BacklogSequence++;
 
-        backlog.setPTSequence(BacklogSequence);
+            backlog.setPTSequence(BacklogSequence);
 
-        projectTask.setProjectSequence(backlog.getProjectIdentifier() + "-" + BacklogSequence);
-        projectTask.setProjectIdentifier(projectIdentifier);
+            projectTask.setProjectSequence(backlog.getProjectIdentifier() + "-" + BacklogSequence);
+            projectTask.setProjectIdentifier(projectIdentifier);
 
-        if (projectTask.getPriority() == null) { //projectTask.getPriority()==0 || this needs to be added while integrating to UI
-            projectTask.setPriority(3);
+            if (projectTask.getPriority() == null) { //projectTask.getPriority()==0 || this needs to be added while integrating to UI
+                projectTask.setPriority(3);
+            }
+            if (projectTask.getStatus() == null || projectTask.getStatus() == "") {
+                projectTask.setStatus("TO_DO");
+            }
+            return projectTaskRepository.save(projectTask);
+        } catch (Exception ex) {
+            throw new ProjectNotFoundException("The given project not found to assign task");
         }
-        if (projectTask.getStatus() == null || projectTask.getStatus() == "") {
-            projectTask.setStatus("TO_DO");
-        }
-        return projectTaskRepository.save(projectTask);
     }
 
 
@@ -59,7 +69,13 @@ public class ProjectTaskService {
         projectTaskRepository.delete(projectTask);
 
     }
-    public Iterable<ProjectTask>findBacklogById(String id){
+
+    public Iterable<ProjectTask> findBacklogById(String id) {
+        Project project = projectRepository.findByProjectIdentifier(id);
+
+        if(project==null){
+            throw new ProjectNotFoundException("Project with ID: '"+id+"' does not exist");
+        }
         return projectTaskRepository.findByProjectIdentifierOrderByPriority(id);
     }
 }

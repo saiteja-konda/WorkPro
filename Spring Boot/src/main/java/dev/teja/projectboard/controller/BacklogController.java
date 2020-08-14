@@ -17,21 +17,30 @@ import javax.validation.Valid;
 public class BacklogController {
     @Autowired
     private ProjectTaskService projectTaskService;
+
     @Autowired
     private MapValidationErrorService mapValidationErrorService;
 
-    @PostMapping("/{backlog_id}")
-    private ResponseEntity<?> addPTtoBacklog(@Valid @RequestBody ProjectTask projectTask, @PathVariable String backlog_id, BindingResult result) {
-        ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
 
-        if (errorMap != null)
-            return errorMap;
+    @PostMapping("/{backlog_id}")
+    public ResponseEntity<?> addPTtoBacklog(@Valid @RequestBody ProjectTask projectTask,
+                                            BindingResult result, @PathVariable String backlog_id){
+        //show delete
+        //custom exception
+
+        ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
+        if (errorMap != null) return errorMap;
+
         ProjectTask projectTask1 = projectTaskService.addProjectTask(backlog_id, projectTask);
+
         return new ResponseEntity<ProjectTask>(projectTask1, HttpStatus.CREATED);
 
     }
+
     @GetMapping("/{backlog_id}")
     public Iterable<ProjectTask> getProjectBacklog(@PathVariable String backlog_id){
+
         return projectTaskService.findBacklogById(backlog_id);
+
     }
 }

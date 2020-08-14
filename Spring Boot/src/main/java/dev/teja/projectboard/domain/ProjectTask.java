@@ -3,6 +3,7 @@ package dev.teja.projectboard.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
@@ -13,7 +14,7 @@ public class ProjectTask {
     private Long id;
     @Column(updatable = false)
     private String projectSequence;
-    @NotNull(message = "Summery cannot be blank, Please include project summary")
+    @NotBlank(message = "Summery cannot be blank, Please include project summary")
     private String summary;
     private String acceptanceCriteria;
     private String status;

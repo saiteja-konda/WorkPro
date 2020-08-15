@@ -1,8 +1,6 @@
 package dev.teja.projectboard.Security;
 import dev.teja.projectboard.domain.User;
-import io.jsonwebtoken.JwtBuilder;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
@@ -37,7 +35,28 @@ public class JwtTokenProvider {
                 .compact();
     }
     //Validation of the Token
+    public Boolean validateToken(String token){
+        try {
+            Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token);
+            return true;
+        }catch (SignatureException ex){
+            System.out.println("Invalid JWT Signature");
+        }catch (MalformedJwtException ex){
+            System.out.println("Invalid JWT Token");
+        }catch (ExpiredJwtException ex){
+            System.out.println("Token Provided is Expired");
+        }catch (UnsupportedJwtException ex){
+            System.out.println("Unsupported JWT token");
+        }catch (IllegalArgumentException ex){
+            System.out.println("JWT Claims String is empty");
+        }
+        return false;
+    }
 
     //Extracting user Id from the Token
-
+    public Long getUserIdFromJWT(String token){
+        Claims claims = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody();
+        String id = (String)claims.get("id");
+        return Long.parseLong(id);
+    }
 }

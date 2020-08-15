@@ -3,6 +3,7 @@ package dev.teja.projectboard.controller;
 import dev.teja.projectboard.domain.User;
 import dev.teja.projectboard.service.MapValidationErrorService;
 import dev.teja.projectboard.service.UserService;
+import dev.teja.projectboard.validaor.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,8 @@ import javax.validation.Valid;
 public class UserController {
 
     @Autowired
+    private UserValidator userValidator;
+    @Autowired
     private MapValidationErrorService mapValidationErrorService;
 
     @Autowired
@@ -26,6 +29,7 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody User user, BindingResult result){
         // Validate passwords match
+        userValidator.validate(user,result);
 
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
         if(errorMap != null)return errorMap;

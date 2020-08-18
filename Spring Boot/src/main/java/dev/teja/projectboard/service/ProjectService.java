@@ -23,6 +23,14 @@ public class ProjectService {
     private UserRepository userRepository;
 
     public Project saverOrUpdateProject(Project project, String username) {
+        if (project.getId() != null) {
+            Project existingProject = projectRepository.findByProjectIdentifier(project.getProjectIdentifier());
+            if (existingProject != null && (!existingProject.getProjectLeader().equals(username))) {
+                throw new ProjectNotFoundException("No such project found in your account ");
+            } else if (existingProject == null) {
+                throw new ProjectNotFoundException("Project ID '" + project.getProjectIdentifier() + " ' can't be delete because it dosen't exists");
+            }
+        }
         try {
             User user = userRepository.findByUsername(username);
             project.setUser(user);
@@ -63,7 +71,7 @@ public class ProjectService {
 
     public void deleteProjectByIdentifier(String projectId, String username) {
 
-        projectRepository.delete(findProjectByIdentifier(projectId,username));
+        projectRepository.delete(findProjectByIdentifier(projectId, username));
     }
 
 }

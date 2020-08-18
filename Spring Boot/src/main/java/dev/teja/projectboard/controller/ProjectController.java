@@ -33,29 +33,29 @@ public class ProjectController {
 
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
         if (errorMap != null) return errorMap;
-        Project project1 = projectService.saverOrUpdateProject(project,principal.getName());
+        Project project1 = projectService.saverOrUpdateProject(project, principal.getName());
         return new ResponseEntity<Project>(project, HttpStatus.CREATED);
     }
 
     @GetMapping("/{projectId}")
-    public ResponseEntity<?> getProjectById(@PathVariable String projectId) {
-        Project project = projectService.findProjectByIdentifier(projectId);
+    public ResponseEntity<?> getProjectById(@PathVariable String projectId, Principal principal) {
+        Project project = projectService.findProjectByIdentifier(projectId,principal.getName());
         return new ResponseEntity<Project>(project, HttpStatus.OK);
     }
 
     @GetMapping("/")
-    public Iterable<Project> getAllProjects() {
-        return projectService.findAll();
+    public Iterable<Project> getAllProjects(Principal principal) {
+        return projectService.findAll(principal.getName());
     }
 
     @DeleteMapping("/{projectId}")
-    public ResponseEntity<?> deleteProjectById(@PathVariable String projectId){
-projectService.deleteProjectByIdentifier(projectId);
-return new ResponseEntity<String>("The Project ID:'"+projectId+"' has been deleted successfully ",HttpStatus.OK);
+    public ResponseEntity<?> deleteProjectById(@PathVariable String projectId, Principal principal) {
+        projectService.deleteProjectByIdentifier(projectId,principal.getName());
+        return new ResponseEntity<String>("The Project ID:'" + projectId + "' has been deleted successfully ", HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public Project updateProject(@PathVariable Long id, @RequestBody Project oldProject){
+    public Project updateProject(@PathVariable Long id, @RequestBody Project oldProject) {
         Project project = projectRepository.findById(id).orElse(null);
 
         project.setProjectName(oldProject.getProjectName());

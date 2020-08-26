@@ -11,7 +11,11 @@ import store from "./store";
 import Register from "./components/register";
 import Login from "./components/login";
 import Index from "./components/index";
-import UpdateProject from './components/project/updateProject';
+import UpdateProject from "./components/project/updateProject";
+import ProjectBoard from "./components/projectBoard/projectBoard";
+import AddProjectTask from "./components/projectBoard/projectTask/addProjectTask";
+import UpdateProjectTask from "./components/projectBoard/projectTask/updateProjectTask";
+
 function App() {
   return (
     <Provider store={store}>
@@ -24,6 +28,9 @@ function App() {
           <Route exact path="/dashboard" component={Dashboard} />
           <Route exact path="/addProject" component={AddProject} />
           <Route exact path="/updateProject/:id" component={UpdateProject} />
+          <Route exact path="/projectBoard/:id" component={ProjectBoard} />
+          <Route exact path="/addProjectTask/:id" component={AddProjectTask} />
+          <Route exact path="/updateProjectTask" component={UpdateProjectTask} />
 
           {/*<Footer />*/}
         </div>

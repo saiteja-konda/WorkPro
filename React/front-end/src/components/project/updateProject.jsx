@@ -92,7 +92,6 @@ class UpdateProject extends Component {
                 <div className="form-group">
                   <input
                     type="text"
-                    type="text"
                     className="form-control form-control-lg"
                     placeholder="Unique Project ID"
                     disabled

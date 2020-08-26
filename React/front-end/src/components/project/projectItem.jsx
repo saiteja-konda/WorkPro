@@ -23,10 +23,11 @@ class ProjectItem extends Component {
             </div>
             <div className="col-md-2 ">
               <ul className="list-group">
-                <li className="list-group-item bg-dark mb-1 text-center text-light font-weight-bold board">
-                  Open
-                </li>
-
+              <Link to={`/projectBoard/${project.projectIdentifier}`}>
+              <li className="list-group-item bg-dark mb-1 text-center text-light font-weight-bold board">
+                    Open
+                  </li>
+                </Link>
                 <Link to={`/updateProject/${project.projectIdentifier}`}>
                   <li className="list-group-item bg-dark mb-1 text-center text-light font-weight-bold update">
                     Edit

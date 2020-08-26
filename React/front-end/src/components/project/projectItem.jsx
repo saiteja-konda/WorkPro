@@ -1,37 +1,34 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
+
 class ProjectItem extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
   render() {
+    const { project } = this.props;
     return (
-      <div className="container mt-5">
-        <div className="card card-body bg-light mb-4">
-          <div className="row mb-5">
-            <div className="col-1 mt-5">
-              <span className="mx-auto text-dark pre">REACT</span>
+      <div className="container">
+        <div className="card card-body bg-light mb-3">
+          <div className="row">
+            {/*         <div className="col-2">
+              <span className="mx-auto">{project.projectIdentifier}</span>
+    </div>*/}
+            <div className="col-lg-10 col-md-4 col-8">
+              <h4>{project.projectName}</h4>
+              <p>{project.description}</p>
             </div>
-            <div className="col-lg-6 col-md-4 col-8 ">
-              <h3 className="text-dark mt-3 font-weight-bold">
-                Spring / React Project
-              </h3>
-              <p className="text-dark font-weight-medium">
-                Project to create App with Spring Boot and React
-              </p>
-            </div>
-            <div className="col-md-4 d-lg-block">
+            <div className="col-md-2 ">
               <ul className="list-group">
                 <li className="list-group-item bg-dark mb-1 text-center text-light font-weight-bold board">
-                  Project Board
+                  Open
                 </li>
 
+                <Link to={`/updateProject/${project.projectIdentifier}`}>
                 <li className="list-group-item bg-dark mb-1 text-center text-light font-weight-bold update">
-                  Update Project Info
-                </li>
+                    Update
+                    </li>
+                  </Link>
 
                 <li className="list-group-item bg-danger mb-1 text-center text-light font-weight-bold delete">
-                  - Delete Project
+                  Delete
                 </li>
               </ul>
             </div>

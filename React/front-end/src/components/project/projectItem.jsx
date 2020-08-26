@@ -22,10 +22,10 @@ class ProjectItem extends Component {
                 </li>
 
                 <Link to={`/updateProject/${project.projectIdentifier}`}>
-                <li className="list-group-item bg-dark mb-1 text-center text-light font-weight-bold update">
-                    Update
-                    </li>
-                  </Link>
+                  <li className="list-group-item bg-dark mb-1 text-center text-light font-weight-bold update">
+                    Edit
+                  </li>
+                </Link>
 
                 <li className="list-group-item bg-danger mb-1 text-center text-light font-weight-bold delete">
                   Delete

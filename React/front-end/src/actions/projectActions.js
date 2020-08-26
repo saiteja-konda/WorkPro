@@ -1,7 +1,7 @@
 import axios from "axios";
 import { GET_ERRORS } from "./types";
+import { API_URL } from '../urlConfig';
 
-const API_URL = "http://localhost:8080/api/project/";
 export const createProject = (project, history) => async (dispatch) => {
   try {
     await axios.post(API_URL, project);

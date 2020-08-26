@@ -10,8 +10,7 @@ class ProjectItem extends Component {
         <div className="card card-body bg-light mb-4">
           <div className="row mb-5">
             <div className="col-1 mt-5">
-              <span className="mx-auto 
-               text-dark pre"> REACT</span>
+              <span className="mx-auto text-dark pre">REACT</span>
             </div>
             <div className="col-lg-6 col-md-4 col-8 ">
               <h3 className="text-dark mt-3 font-weight-bold">

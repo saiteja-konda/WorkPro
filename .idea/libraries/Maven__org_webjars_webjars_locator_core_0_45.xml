@@ -3,9 +3,6 @@
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/org/webjars/webjars-locator-core/0.45/webjars-locator-core-0.45.jar!/" />
     </CLASSES>
-    <JAVADOC>
-      <root url="jar://$MAVEN_REPOSITORY$/org/webjars/webjars-locator-core/0.45/webjars-locator-core-0.45-javadoc.jar!/" />
-    </JAVADOC>
     <SOURCES>
       <root url="jar://$MAVEN_REPOSITORY$/org/webjars/webjars-locator-core/0.45/webjars-locator-core-0.45-sources.jar!/" />
     </SOURCES>

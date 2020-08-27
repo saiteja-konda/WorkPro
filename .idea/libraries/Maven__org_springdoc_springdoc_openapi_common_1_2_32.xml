@@ -3,9 +3,6 @@
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/org/springdoc/springdoc-openapi-common/1.2.32/springdoc-openapi-common-1.2.32.jar!/" />
     </CLASSES>
-    <JAVADOC>
-      <root url="jar://$MAVEN_REPOSITORY$/org/springdoc/springdoc-openapi-common/1.2.32/springdoc-openapi-common-1.2.32-javadoc.jar!/" />
-    </JAVADOC>
     <SOURCES>
       <root url="jar://$MAVEN_REPOSITORY$/org/springdoc/springdoc-openapi-common/1.2.32/springdoc-openapi-common-1.2.32-sources.jar!/" />
     </SOURCES>

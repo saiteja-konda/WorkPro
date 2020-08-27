@@ -41,7 +41,7 @@ class AddProjectTask extends Component {
       priority: this.state.priority,
       dueDate: this.state.dueDate,
     };
-    console.log(newTask);
+    
     this.props.addProjectTask(
       this.state.projectIdentifier,
       newTask,
@@ -60,7 +60,7 @@ class AddProjectTask extends Component {
                 Back to Project Board
               </Link>
               <h4 className="display-5 text-center">Add Project Task</h4>
-              <p className="lead text-center">{projectName}{id}</p>
+              <p className="lead text-center">{`Project name    :${this.state.projectIdentifier}`}</p>
               <form onSubmit={this.onSubmit}>
                 <div className="form-group">
                   <input

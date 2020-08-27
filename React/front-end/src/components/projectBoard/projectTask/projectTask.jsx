@@ -36,8 +36,12 @@ class ProjectTask extends Component {
           <p className="card-text text-truncate ">
             {project_task.acceptanceCriteria}
           </p>
-          <Link to="/updateProjectTask " className="btn btn-primary">
-            View / Update
+          <Link
+            to={`/updateProjectTask/${project_task.projectIdentifier}/${project_task.projectSequence}`}
+            className="btn mr-2 btn-primary"
+          >
+            
+            Update
           </Link>
 
           <button className="btn btn-danger ml-4">Delete</button>

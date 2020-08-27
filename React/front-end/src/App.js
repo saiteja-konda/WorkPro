@@ -30,7 +30,7 @@ function App() {
           <Route exact path="/updateProject/:id" component={UpdateProject} />
           <Route exact path="/projectBoard/:id" component={ProjectBoard} />
           <Route exact path="/addProjectTask/:id" component={AddProjectTask} />
-          <Route exact path="/updateProjectTask" component={UpdateProjectTask} />
+          <Route exact path="/updateProjectTask/:backlog_id/:pt_id" component={UpdateProjectTask} />
 
           {/*<Footer />*/}
         </div>

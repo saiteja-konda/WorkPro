@@ -26,7 +26,7 @@ class ProjectBoard extends Component {
     const { id } = this.props.match.params;
     const { project_tasks } = this.props.backlog;
     const { errors } = this.state;
-
+  
     let BoardContent;
     const boardAlgorithm = (errors, project_tasks) => {
       if (project_tasks.length < 1) {
@@ -47,7 +47,7 @@ class ProjectBoard extends Component {
         return <Backlog project_tasks_prop={project_tasks} />;
       }
     };
-    BoardContent = boardAlgorithm(errors,project_tasks)
+    BoardContent = boardAlgorithm(errors, project_tasks);
     return (
       <div className="container">
         <Link to={`/addProjectTask/${id}`} className="btn btn-sm btn-success">
@@ -67,9 +67,9 @@ ProjectBoard.protoType = {
   errors: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   backlog: state.backlog,
-  errors: state.errors
+  errors: state.errors,
 });
 
 export default connect(mapStateToProps, { getBacklog })(ProjectBoard);

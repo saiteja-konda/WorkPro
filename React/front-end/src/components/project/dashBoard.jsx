@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import ProjectItem from "./project/projectItem";
-import CreateProjectButton from "./project/createProjectButton";
+import ProjectItem from "../project/projectItem";
+import CreateProjectButton from "../project/createProjectButton";
 import { connect } from "react-redux";
-import { getProjects } from "../actions/projectActions";
+import { getProjects } from "../../actions/projectActions";
 import PropTypes from "prop-types";
 
 class Dashboard extends Component {

@@ -1,23 +1,34 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { login } from "../../actions/securityActions";
+import { PropTypes } from "prop-types";
+
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userName: "",
+      username: "",
       password: "",
     };
-    this.onChange = this.onChange.bind(this)
-    this.onSubmit = this.onSubmit.bind(this)
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+  //WARNING! To be deprecated in React v17. Use new lifecycle static getDerivedStateFromProps instead.
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.security.validToken) {
+      this.props.history.push("/dashboard");
+    }
   }
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
   onSubmit(e) {
-    e.preventDefault()
-    const User = {
-      userName: this.state.userName,
+    e.preventDefault();
+    const LoginRequest = {
+      username: this.state.username,
       password: this.state.password,
     };
+    this.props.login(LoginRequest);
   }
   render() {
     return (
@@ -26,14 +37,14 @@ class Login extends Component {
           <div className="row">
             <div className="col-md-4 m-auto">
               <h1 className="display-5 mb-5 mt-5 text-center">Log In</h1>
-              <form action="dashboard.html">
+              <form onSubmit={this.onSubmit}>
                 <div className="form-group">
                   <input
-                    type="email"
+                    type="text"
                     className="form-control form-control-lg"
                     placeholder="Email Address"
-                    name="userName"
-                    value={this.state.userName}
+                    name="username"
+                    value={this.state.username}
                     onChange={this.onChange}
                   />
                 </div>
@@ -63,5 +74,12 @@ class Login extends Component {
     );
   }
 }
-
-export default Login;
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
+};
+const mapStoreToProps = (state) => ({
+  security: state.security,
+  errors: state.errors,
+});
+export default connect(mapStoreToProps, { login })(Login);

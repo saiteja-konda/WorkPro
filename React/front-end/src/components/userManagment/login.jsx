@@ -2,7 +2,22 @@ import React, { Component } from "react";
 class Login extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      userName: "",
+      password: "",
+    };
+    this.onChange = this.onChange.bind(this)
+    this.onSubmit = this.onSubmit.bind(this)
+  }
+  onChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+  onSubmit(e) {
+    e.preventDefault()
+    const User = {
+      userName: this.state.userName,
+      password: this.state.password,
+    };
   }
   render() {
     return (
@@ -17,7 +32,9 @@ class Login extends Component {
                     type="email"
                     className="form-control form-control-lg"
                     placeholder="Email Address"
-                    name="email"
+                    name="userName"
+                    value={this.state.userName}
+                    onChange={this.onChange}
                   />
                 </div>
                 <div className="form-group">
@@ -26,9 +43,18 @@ class Login extends Component {
                     className="form-control form-control-lg"
                     placeholder="Password"
                     name="password"
+                    value={this.state.password}
+                    onChange={this.onChange}
                   />
                 </div>
-                <button type="submit" placeholder="" className="btn btn-dark btn-block mt-4" >Login</button>
+                <button
+                  type="submit"
+                  placeholder=""
+                  className="btn btn-dark btn-block mt-4"
+                  onSubmit={this.onSubmit}
+                >
+                  Login
+                </button>
               </form>
             </div>
           </div>

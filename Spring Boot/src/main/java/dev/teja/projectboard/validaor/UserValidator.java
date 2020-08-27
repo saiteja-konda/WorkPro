@@ -19,7 +19,7 @@ public class UserValidator implements Validator {
         errors.rejectValue("password","lenght","password must be at least 6 characters");
     }
     if(!user.getPassword().equals(user.getConfirmPassword())){
-        errors.rejectValue("ConfirmPassword","Match","password must match");
+        errors.rejectValue("confirmPassword","Match","password must match");
     }
     }
 }

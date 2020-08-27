@@ -2,21 +2,41 @@ package dev.teja.projectboard.service;
 
 import dev.teja.projectboard.domain.Backlog;
 import dev.teja.projectboard.domain.Project;
+import dev.teja.projectboard.domain.User;
 import dev.teja.projectboard.exception.ProjectIdException;
+import dev.teja.projectboard.exception.ProjectNotFoundException;
 import dev.teja.projectboard.repository.BacklogRepository;
 import dev.teja.projectboard.repository.ProjectRepository;
+import dev.teja.projectboard.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.security.Principal;
 
 @Service
 public class ProjectService {
     @Autowired
-    public ProjectRepository projectRepository;
+    private ProjectRepository projectRepository;
     @Autowired
-    public BacklogRepository backlogRepository;
+    private BacklogRepository backlogRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-    public Project saverOrUpdateProject(Project project) {
+    public Project saverOrUpdateProject(Project project, String username) {
+        if (project.getId() != null) {
+            Project existingProject = projectRepository.findByProjectIdentifier(project.getProjectIdentifier());
+            if (existingProject != null && (!existingProject.getProjectLeader().equals(username))) {
+                throw new ProjectNotFoundException("No such project found in your account ");
+            } else if (existingProject == null) {
+                throw new ProjectNotFoundException("Project ID '" + project.getProjectIdentifier() + " ' can't be delete because it dosen't exists");
+            }
+        }
         try {
+            User user = userRepository.findByUsername(username);
+            project.setUser(user);
+            project.setProjectLeader(user.getUsername());
+            project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
+
             if (project.getId() == null) {
                 Backlog backlog = new Backlog();
                 project.setBacklog(backlog);
@@ -34,24 +54,24 @@ public class ProjectService {
         }
     }
 
-    public Project findProjectByIdentifier(String projectId) {
+    public Project findProjectByIdentifier(String projectId, String username) {
         Project project = projectRepository.findByProjectIdentifier(projectId.toUpperCase());
         if (project == null) {
             throw new ProjectIdException("Project ID '" + projectId + "' dose not exists");
         }
+        if (!project.getProjectLeader().equals(username)) {
+            throw new ProjectNotFoundException("No such Project found in your account");
+        }
         return project;
     }
 
-    public Iterable<Project> findAll() {
-        return projectRepository.findAll();
+    public Iterable<Project> findAll(String username) {
+        return projectRepository.findByProjectLeader(username);
     }
 
-    public void deleteProjectByIdentifier(String projectId) {
-        Project project = projectRepository.findByProjectIdentifier(projectId);
-        if (project == null) {
-            throw new ProjectIdException("Cannot Delete '" + projectId + "',it dose not exists");
-        }
-        projectRepository.delete(project);
+    public void deleteProjectByIdentifier(String projectId, String username) {
+
+        projectRepository.delete(findProjectByIdentifier(projectId, username));
     }
 
 }

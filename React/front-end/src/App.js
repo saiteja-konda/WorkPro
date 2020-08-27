@@ -1,25 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.css";
+import Header from "./components/Layout/header";
+// import Footer from "./components/Layout/footer";
+import Dashboard from "./components/dashBoard";
+import AddProject from "./components/project/addProject";
+import { Provider } from "react-redux";
+import store from "./store";
+import Register from "./components/register";
+import Login from "./components/login";
+import Index from "./components/index";
+import UpdateProject from "./components/project/updateProject";
+import ProjectBoard from "./components/projectBoard/projectBoard";
+import AddProjectTask from "./components/projectBoard/projectTask/addProjectTask";
+import UpdateProjectTask from "./components/projectBoard/projectTask/updateProjectTask";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <Router>
+        <div className="App">
+          <Header />
+          <Route exact path="/index" component={Index} />
+          <Route exact path="/register" component={Register} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/dashboard" component={Dashboard} />
+          <Route exact path="/addProject" component={AddProject} />
+          <Route exact path="/updateProject/:id" component={UpdateProject} />
+          <Route exact path="/projectBoard/:id" component={ProjectBoard} />
+          <Route exact path="/addProjectTask/:id" component={AddProjectTask} />
+          <Route exact path="/updateProjectTask/:backlog_id/:pt_id" component={UpdateProjectTask} />
+
+          {/*<Footer />*/}
+        </div>
+      </Router>
+    </Provider>
   );
 }
 

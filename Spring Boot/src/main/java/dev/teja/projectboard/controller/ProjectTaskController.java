@@ -11,9 +11,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@CrossOrigin
 @RequestMapping("/api/board")
 public class ProjectTaskController {
     @Autowired

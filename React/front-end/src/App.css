@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
 * {
   font-family: "Lato";
-  overflow: hidden;
+  overflow: auto;
 }
 img {
   width: 100%;

@@ -30,7 +30,7 @@ if (jwtToken) {
   });
   const currentTime = Date.now() / 1000;
   if (decoded_jwtToken.exp < currentTime) {
-    window.location.href = "/";
+    window.location.href = "/ ";
   }
 }
 

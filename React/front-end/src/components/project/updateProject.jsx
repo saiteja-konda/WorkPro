@@ -73,21 +73,20 @@ class UpdateProject extends Component {
               <hr />
               <form onSubmit={this.onSubmit}>
                 <div className="form-group">
-                <input
-                type="text"
-                className={classnames("form-control form-control-lg", {
-                  "is-invalid": errors.projectName,
-                })}
-                placeholder="Project Name"
-                name="projectName"
-                value={this.state.projectName}
-                onChange={this.onChange}
-              />
-              {errors.projectName && (
-                <div className="invalid-feedback">
-                  {errors.projectName}
-                </div>
-              )}
+                  <input
+                    autoFocus
+                    type="text"
+                    className={classnames("form-control form-control-lg", {
+                      "is-invalid": errors.projectName,
+                    })}
+                    placeholder="Project Name"
+                    name="projectName"
+                    value={this.state.projectName}
+                    onChange={this.onChange}
+                  />
+                  {errors.projectName && (
+                    <div className="invalid-feedback">{errors.projectName}</div>
+                  )}
                 </div>
                 <div className="form-group">
                   <input
@@ -101,20 +100,18 @@ class UpdateProject extends Component {
                   />
                 </div>
                 <div className="form-group">
-                <textarea
-                className={classnames("form-control form-control-lg", {
-                  "is-invalid": errors.description,
-                })}
-                placeholder="Description about your Project"
-                name="description"
-                value={this.state.description}
-                onChange={this.onChange}
-              />
-              {errors.description && (
-                <div className="invalid-feedback">
-                  {errors.description}
-                </div>
-              )}
+                  <textarea
+                    className={classnames("form-control form-control-lg", {
+                      "is-invalid": errors.description,
+                    })}
+                    placeholder="Description about your Project"
+                    name="description"
+                    value={this.state.description}
+                    onChange={this.onChange}
+                  />
+                  {errors.description && (
+                    <div className="invalid-feedback">{errors.description}</div>
+                  )}
                 </div>
                 <h6>Start Date</h6>
                 <div className="form-group">

@@ -58,6 +58,7 @@ class Register extends Component {
               <form onSubmit={this.onSubmit}>
                 <div className="form-group">
                   <input
+                    autoFocus
                     type="text"
                     className={classnames("form-control form-control-lg", {
                       "is-invalid": errors.fullName,

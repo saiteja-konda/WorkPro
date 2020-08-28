@@ -19,6 +19,7 @@ import AddProjectTask from "./components/projectBoard/projectTask/addProjectTask
 import UpdateProjectTask from "./components/projectBoard/projectTask/updateProjectTask";
 import setJWTToken from "./utills/setJWTToken";
 import { logout } from "./actions/securityActions";
+import User from "./components/userManagment/user";
 const jwtToken = localStorage.jwtToken;
 
 if (jwtToken) {
@@ -59,6 +60,7 @@ function App() {
             path="/updateProjectTask/:backlog_id/:pt_id"
             component={UpdateProjectTask}
           />
+          <Route exact path="/user" component={User} />
           {/*<Footer />*/}
         </div>
       </Router>

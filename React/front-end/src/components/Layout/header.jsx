@@ -32,9 +32,10 @@ class Header extends Component {
           <li className="nav-item">
             <Link
               className="nav-link  font-weight-bold text-light mr-1 "
-              to="/dashboard"
+              to="/user"
             >
               {user.fullName}
+              
             </Link>
           </li>
           <li className="nav-item">

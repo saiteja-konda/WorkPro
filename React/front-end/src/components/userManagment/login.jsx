@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { login } from "../../actions/securityActions";
 import { PropTypes } from "prop-types";
 import classnames from "classnames";
+import { toast } from "react-toastify";
+
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -23,6 +25,17 @@ class Login extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.security.validToken) {
       this.props.history.push("/dashboard");
+
+      toast.info(` Welcome ${nextProps.security.user.fullName}`, {
+        className: "dark",
+        position: "bottom-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });

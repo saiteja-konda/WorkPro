@@ -1,10 +1,13 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
+import { ToastContainer } from "react-toastify";
+import { Zoom } from "react-toastify";
 import SecuredRoute from "./utills/secureRoutes";
 import store from "./store";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
+import "react-toastify/dist/ReactToastify.css";
 import Header from "./components/Layout/header";
 // import Footer from "./components/Layout/footer";
 import Register from "./components/userManagment/register";
@@ -44,24 +47,27 @@ function App() {
       <Router>
         <div className="App">
           <Header />
+          <ToastContainer
+            position="bottom-right"
+            autoClose={2000}
+            hideProgressBar={true}
+            newestOnTop={false}
+            closeOnClick
+            transition={Zoom}
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            
+          />
           {/*public Routes*/}
-
           <Route exact path="/" component={Index} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
-
           {/*private Routes*/}
           <Switch>
-            <SecuredRoute 
-              exact 
-              path="/dashboard" 
-              component={Dashboard} 
-              />
-            <SecuredRoute 
-              exact 
-              path="/addProject" 
-              component={AddProject} 
-              />
+            <SecuredRoute exact path="/dashboard" component={Dashboard} />
+            <SecuredRoute exact path="/addProject" component={AddProject} />
             <SecuredRoute
               exact
               path="/updateProject/:id"
@@ -82,10 +88,7 @@ function App() {
               path="/updateProjectTask/:backlog_id/:pt_id"
               component={UpdateProjectTask}
             />
-            <SecuredRoute 
-              exact 
-              path="/user" 
-              component={User} />
+            <SecuredRoute exact path="/user" component={User} />
           </Switch>
           {/*<Footer />*/}
         </div>

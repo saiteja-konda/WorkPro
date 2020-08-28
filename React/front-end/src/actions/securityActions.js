@@ -19,26 +19,36 @@ export const createNewUser = (newUser, history) => async (dispatch) => {
     });
   }
 };
-export const login = (LoginRequest) => async (dispatch) => {
+export const login = LoginRequest => async dispatch => {
   try {
-    //post login request
+    // post => Login Request
     const res = await axios.post(USER_LOGIN_API_URL, LoginRequest);
-    //get the token
+    // extract token from res.data
     const { token } = res.data;
-    //store token in localStorage
-    localStorage.setItem("jwToken", token);
-    //This function below is sets token in header
+    // store the token in the localStorage
+    localStorage.setItem("jwtToken", token);
+    // set our token in header ***
     setJWTToken(token);
-    //decode the token
+    // decode token on React
     const decoded = jwt_decode(token);
+    // dispatch to our securityReducer
     dispatch({
       type: SET_CURRENT_USER,
-      payload: decoded,
+      payload: decoded
     });
   } catch (err) {
     dispatch({
       type: GET_ERRORS,
-      payload: err.response.data,
+      payload: err.response.data
     });
   }
+};
+
+export const logout = () => dispatch => {
+  localStorage.removeItem("jwtToken");
+  setJWTToken(false);
+  dispatch({
+    type: SET_CURRENT_USER,
+    payload: {}
+  });
 };

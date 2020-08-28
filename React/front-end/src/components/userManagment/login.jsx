@@ -2,21 +2,30 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { login } from "../../actions/securityActions";
 import { PropTypes } from "prop-types";
-
+import classnames from "classnames";
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
       username: "",
       password: "",
+      errors: {},
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+  }
+  componentDidMount() {
+    if (this.props.security.validToken) {
+      this.props.history.push("/dashboard");
+    }
   }
   //WARNING! To be deprecated in React v17. Use new lifecycle static getDerivedStateFromProps instead.
   componentWillReceiveProps(nextProps) {
     if (nextProps.security.validToken) {
       this.props.history.push("/dashboard");
+    }
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
     }
   }
   onChange(e) {
@@ -31,6 +40,7 @@ class Login extends Component {
     this.props.login(LoginRequest);
   }
   render() {
+    const { errors } = this.state;
     return (
       <div className="login">
         <div className="container">
@@ -41,22 +51,32 @@ class Login extends Component {
                 <div className="form-group">
                   <input
                     type="text"
-                    className="form-control form-control-lg"
+                    className={classnames("form-control form-control-lg", {
+                      "is-invalid": errors.username,
+                    })}
                     placeholder="Email Address"
                     name="username"
                     value={this.state.username}
                     onChange={this.onChange}
                   />
+                  {errors.username && (
+                    <div className="invalid-feedback">{errors.username}</div>
+                  )}
                 </div>
                 <div className="form-group">
                   <input
                     type="password"
-                    className="form-control form-control-lg"
+                    className={classnames("form-control form-control-lg", {
+                      "is-invalid": errors.password,
+                    })}
                     placeholder="Password"
                     name="password"
                     value={this.state.password}
                     onChange={this.onChange}
                   />
+                  {errors.password && (
+                    <div className="invalid-feedback">{errors.password}</div>
+                  )}
                 </div>
                 <button
                   type="submit"
@@ -77,6 +97,7 @@ class Login extends Component {
 Login.propTypes = {
   login: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
+  security: PropTypes.object.isRequired,
 };
 const mapStoreToProps = (state) => ({
   security: state.security,

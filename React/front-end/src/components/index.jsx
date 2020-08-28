@@ -1,9 +1,16 @@
 import React, { Component } from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { PropTypes } from 'prop-types';
 class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+  }
+  componentDidMount() {
+    if (this.props.security.validToken) {
+      this.props.history.push("/dashboard");
+    }
   }
   render() {
     return (
@@ -31,5 +38,11 @@ class Index extends Component {
     );
   }
 }
+Index.propTypes = {
+  security: PropTypes.object.isRequired,
+};
+const mapStoreToProp = (state) => ({
+  security: state.security,
+});
 
-export default Index;
+export default connect(mapStoreToProp)(Index);

@@ -1,24 +1,24 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Provider } from "react-redux";
+import store from "./store";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
 import Header from "./components/Layout/header";
 // import Footer from "./components/Layout/footer";
-import Dashboard from "./components/project/dashBoard";
-import AddProject from "./components/project/addProject";
-import { Provider } from "react-redux";
-import store from "./store";
 import Register from "./components/userManagment/register";
 import Login from "./components/userManagment/login";
+import jwt_decode from "jwt-decode";
+import { SET_CURRENT_USER } from "./actions/types";
 import Index from "./components/index";
+import Dashboard from "./components/project/dashBoard";
 import UpdateProject from "./components/project/updateProject";
+import AddProject from "./components/project/addProject";
 import ProjectBoard from "./components/projectBoard/projectBoard";
 import AddProjectTask from "./components/projectBoard/projectTask/addProjectTask";
 import UpdateProjectTask from "./components/projectBoard/projectTask/updateProjectTask";
-import jwt_decode from "jwt-decode";
 import setJWTToken from "./utills/setJWTToken";
-import { SET_CURRENT_USER } from "./actions/types";
-
+import { logout } from "./actions/securityActions";
 const jwtToken = localStorage.jwtToken;
 
 if (jwtToken) {
@@ -28,9 +28,11 @@ if (jwtToken) {
     type: SET_CURRENT_USER,
     payload: decoded_jwtToken,
   });
+
   const currentTime = Date.now() / 1000;
   if (decoded_jwtToken.exp < currentTime) {
-    window.location.href = "/ ";
+    store.dispatch(logout());
+    window.location.href = "/";
   }
 }
 

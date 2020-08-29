@@ -3,6 +3,9 @@ import { createNewUser } from "../../actions/securityActions";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import classnames from "classnames";
+import { Spring } from "react-spring/renderprops";
+import { Link } from "react-router-dom";
+import { Button } from "antd";
 
 class Register extends Component {
   constructor() {
@@ -48,84 +51,128 @@ class Register extends Component {
   render() {
     const { errors } = this.state;
     return (
-      <div className="register">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-4 m-auto">
-              <h1 className="display-5 text-center">Sign Up</h1>
-              <p className="lead text-center">Create your Account</p>
-              <form onSubmit={this.onSubmit}>
-                <div className="form-group">
-                  <input
-                    autoFocus
-                    type="text"
-                    className={classnames("form-control form-control-lg", {
-                      "is-invalid": errors.fullName,
-                    })}
-                    placeholder="Full Name"
-                    name="fullName"
-                    value={this.state.fullName}
-                    onChange={this.onChange}
-                  />
-                  {errors.fullName && (
-                    <div className="invalid-feedback">{errors.fullName}</div>
-                  )}
+      <Spring
+        from={{ opacity: 0 }}
+        to={{ opacity: 1 }}
+        config={{ delay: 500, duration: 500 }}
+      >
+        {(props) => (
+          <div style={props}>
+            <div className="register">
+              <div className="container">
+                <div className="row">
+                  <div className="col-md-4 m-auto">
+                    <h1 className="display-5 text-center text-light">
+                      Sign Up
+                    </h1>
+                    <p className="lead text-center text-light">
+                      Create your Account
+                    </p>
+                    <form onSubmit={this.onSubmit}>
+                      <div className="form-group">
+                        <input
+                          autoFocus
+                          type="text"
+                          className={classnames(
+                            "form-control form-control-lg",
+                            {
+                              "is-invalid": errors.fullName,
+                            }
+                          )}
+                          placeholder="Full Name"
+                          name="fullName"
+                          value={this.state.fullName}
+                          onChange={this.onChange}
+                        />
+                        {errors.fullName && (
+                          <div className="feedback">{errors.fullName}</div>
+                        )}
+                      </div>
+                      <div className="form-group">
+                        <input
+                          type="text"
+                          className={classnames(
+                            "form-control form-control-lg",
+                            {
+                              "is-invalid": errors.username,
+                            }
+                          )}
+                          placeholder="Email Address (Username)"
+                          name="username"
+                          value={this.state.userName}
+                          onChange={this.onChange}
+                        />
+                        {errors.username && (
+                          <div className="feedback">{errors.username}</div>
+                        )}
+                      </div>
+                      <div className="form-group">
+                        <input
+                          type="password"
+                          className={classnames(
+                            "form-control form-control-lg",
+                            {
+                              "is-invalid": errors.password,
+                            }
+                          )}
+                          placeholder="Password"
+                          name="password"
+                          value={this.state.password}
+                          onChange={this.onChange}
+                        />
+                        {errors.password && (
+                          <div className="feedback">{errors.password}</div>
+                        )}
+                      </div>
+                      <div className="form-group">
+                        <input
+                          type="password"
+                          className={classnames(
+                            "form-control form-control-lg",
+                            {
+                              "is-invalid": errors.confirmPassword,
+                            }
+                          )}
+                          placeholder="Confirm Password"
+                          name="confirmPassword"
+                          value={this.state.confirmPassword}
+                          onChange={this.onChange}
+                        />
+                        {errors.confirmPassword && (
+                          <div className="feedback">
+                            {errors.confirmPassword}
+                          </div>
+                        )}
+                      </div>
+                      <button
+                        type="submit"
+                        className="btn btn-dark btn-block mt-4"
+                      >
+                        Register
+                      </button>
+                      <span className="text-light text-center">
+                        <Link to="/login">
+                          <Button
+                            className="btn"
+                            style={{
+                              border: "none",
+                              color: "white",
+                              fontSize: "12px",
+                              justifyContent: "center",
+                            }}
+                          >
+                            Already Registered? Click here to login
+                          </Button>
+                        </Link>
+                      </span>
+                    </form>
+                  </div>
                 </div>
-                <div className="form-group">
-                  <input
-                    type="text"
-                    className={classnames("form-control form-control-lg", {
-                      "is-invalid": errors.username,
-                    })}
-                    placeholder="Email Address (Username)"
-                    name="username"
-                    value={this.state.userName}
-                    onChange={this.onChange}
-                  />
-                  {errors.username && (
-                    <div className="invalid-feedback">{errors.username}</div>
-                  )}
-                </div>
-                <div className="form-group">
-                  <input
-                    type="password"
-                    className={classnames("form-control form-control-lg", {
-                      "is-invalid": errors.password,
-                    })}
-                    placeholder="Password"
-                    name="password"
-                    value={this.state.password}
-                    onChange={this.onChange}
-                  />{" "}
-                  {errors.password && (
-                    <div className="invalid-feedback">{errors.password}</div>
-                  )}
-                </div>
-                <div className="form-group">
-                  <input
-                    type="password"
-                    className={classnames("form-control form-control-lg", {
-                      "is-invalid": errors.confirmPassword,
-                    })}
-                    placeholder="Confirm Password"
-                    name="confirmPassword"
-                    value={this.state.confirmPassword}
-                    onChange={this.onChange}
-                  />
-                  {errors.confirmPassword && (
-                    <div className="invalid-feedback">
-                      {errors.confirmPassword}
-                    </div>
-                  )}
-                </div>
-                <button type="submit" className="btn btn-dark btn-block mt-4">
-                  Register
-                </button>
-              </form>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+        )}
+      </Spring>
     );
   }
 }

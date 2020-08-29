@@ -13,6 +13,7 @@ class Backlog extends Component {
     let todoItems = [];
     let inProgressItems = [];
     let doneItems = [];
+    let ideaItems = [];
 
     for (let i = 0; i < tasks.length; i++) {
       if (tasks[i].props.project_task.status === "TO_DO") {
@@ -26,7 +27,12 @@ class Backlog extends Component {
       if (tasks[i].props.project_task.status === "DONE") {
         doneItems.push(tasks[i]);
       }
+      if (tasks[i].props.project_task.status === "IDEA") {
+        ideaItems.push(tasks[i]);
+      }
+
     }
+    
 
     return (
       <div className="container">
@@ -35,7 +41,7 @@ class Backlog extends Component {
             //
           }
 
-          <div className="offset-1 col-md-3">
+          <div className="col-md-3">
             <Spring
               from={{ opacity: 0 }}
               to={{ opacity: 1 }}
@@ -43,7 +49,7 @@ class Backlog extends Component {
             >
               {(props) => (
                 <div style={props}>
-                  <div className="card bg-dark text-white mb-2">
+                  <div style = {{backgroundColor:"#bfdcae"}}  className="card text-white mb-2">
                     <div className="card-header">
                       <h5 className="card-title text-capitalize">To-Do list</h5>
                     </div>
@@ -65,7 +71,7 @@ class Backlog extends Component {
             >
               {(props) => (
                 <div style={props}>
-                  <div className="card bg-dark text-white mb-2">
+                  <div style = {{backgroundColor:"#81b214"}} className="card text-white mb-2">
                     <div className="card-header">
                     <h5 className="card-title text-capitalize">In Process</h5>
                     </div>
@@ -86,7 +92,7 @@ class Backlog extends Component {
             >
               {(props) => (
                 <div style={props}>
-                  <div className="card bg-dark text-white mb-2">
+                  <div style = {{backgroundColor:"#206a5d" }} className="card text-white mb-2">
                     <div className="card-header">
                     <h5 className="card-title text-capitalize">Done</h5>
                     </div>
@@ -96,7 +102,28 @@ class Backlog extends Component {
               )}
             </Spring>
           </div>
-        </div>
+          {
+            //
+          }
+          <div className="col-md-3">
+            <Spring
+              from={{ opacity: 0 }}
+              to={{ opacity: 1 }}
+              config={{ delay: 1500, duration: 1500 }}
+            >
+              {(props) => (
+                <div style={props}>
+                  <div style = {{backgroundColor:"#ff8364" }} className="card text-white mb-2">
+                    <div className="card-header">
+                    <h5 className="card-title text-capitalize">Ideas</h5>
+                    </div>
+                  </div>
+                  {ideaItems}
+                </div>
+              )}
+            </Spring>
+          </div>
+          </div>
       </div>
     );
   }

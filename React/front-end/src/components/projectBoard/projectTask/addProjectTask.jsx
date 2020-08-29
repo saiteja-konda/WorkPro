@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import classnames from "classnames";
 import { addProjectTask } from "../../../actions/backlogActions";
 import PropTypes from "prop-types";
+import { Spring } from "react-spring/renderprops";
 
 class AddProjectTask extends Component {
   constructor(props) {
@@ -51,94 +52,113 @@ class AddProjectTask extends Component {
     const { id } = this.props.match.params;
     const { errors } = this.state;
     return (
-      <div className="add-PBI">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-8 m-auto">
-              <Link to={`/projectBoard/${id}`} className="btn btn-sm btn-light">
-                Back to Project Board
-              </Link>
-              <h4 className="display-5 text-center">Add Project Task</h4>
-              <p className=" text-center h6">
-                Project name
-                <span className="text-success h6">{`   :${this.state.projectIdentifier}`}</span>
-              </p>
-              <form onSubmit={this.onSubmit}>
-                <div className="form-group">
-                  <input
-                    autoFocus
-                    type="text"
-                    className={classnames("form-control form-control-lg", {
-                      "is-invalid": errors.summary,
-                    })}
-                    name="summary"
-                    placeholder="Project Task summary"
-                    value={this.state.summary}
-                    onChange={this.onChange}
-                  />
-                  {errors.summary && (
-                    <div className="invalid-feedback">{errors.summary}</div>
-                  )}
-                </div>
-                <div className="form-group">
-                  <textarea
-                    className="form-control form-control-lg"
-                    placeholder="Acceptance Criteria"
-                    name="acceptanceCriteria"
-                    value={this.state.acceptanceCriteria}
-                    onChange={this.onChange}
-                  ></textarea>
-                </div>
-                <h6>Due Date</h6>
-                <div className="form-group">
-                  <input
-                    type="date"
-                    className="form-control form-control-lg"
-                    name="dueDate"
-                    value={this.state.dueDate}
-                    onChange={this.onChange}
-                  />
-                </div>
-                <div className="form-group">
-                  <select
-                    className="form-control form-control-lg"
-                    name="priority"
-                    value={this.state.priority}
-                    onChange={this.onChange}
-                  >
-                    <option value={0}>Select Priority</option>
-                    <option value={1}>High</option>
-                    <option value={2}>Medium</option>
-                    <option value={3}>Low</option>
-                  </select>
-                </div>
+      <Spring
+        from={{ opacity: 0 }}
+        to={{ opacity: 1 }}
+        config={{ delay: 500, duration: 500 }}
+      >
+        {(props) => (
+          <div style={props}>
+            <div className="add-PBI">
+              <div className="container">
+                <div className="row">
+                  <div className="col-md-6 m-auto">
+                    <h4 className="display-5 text-center text-white ">
+                      Add Project Task
+                    </h4>
+                    <p className=" text-center text-white  h6">
+                      Project name
+                      <span className="text-white h6">{`   :${this.state.projectIdentifier}`}</span>
+                    </p>
+                    <form onSubmit={this.onSubmit}>
+                      <div className="form-group">
+                        <input
+                          autoFocus
+                          type="text"
+                          className={classnames(
+                            "form-control form-control-lg",
+                            {
+                              "is-invalid": errors.summary,
+                            }
+                          )}
+                          name="summary"
+                          placeholder="Project Task summary"
+                          value={this.state.summary}
+                          onChange={this.onChange}
+                        />
+                        {errors.summary && (
+                          <div className="feedback">
+                            {errors.summary}
+                          </div>
+                        )}
+                      </div>
+                      <div className="form-group">
+                        <textarea
+                          className="form-control form-control-lg"
+                          placeholder="Acceptance Criteria"
+                          name="acceptanceCriteria"
+                          value={this.state.acceptanceCriteria}
+                          onChange={this.onChange}
+                        ></textarea>
+                      </div>
+                      <h6>Due Date</h6>
+                      <div className="form-group">
+                        <input
+                          type="date"
+                          className="form-control form-control-lg"
+                          name="dueDate"
+                          value={this.state.dueDate}
+                          onChange={this.onChange}
+                        />
+                      </div>
+                      <div className="form-group">
+                        <select
+                          className="form-control form-control-lg"
+                          name="priority"
+                          value={this.state.priority}
+                          onChange={this.onChange}
+                        >
+                          <option value={0}>Select Priority</option>
+                          <option value={1}>High</option>
+                          <option value={2}>Medium</option>
+                          <option value={3}>Low</option>
+                          <option value={4}>Idea</option>
+                        </select>
+                      </div>
 
-                <div className="form-group">
-                  <select
-                    className="form-control form-control-lg"
-                    name="status"
-                    value={this.state.status}
-                    onChange={this.onChange}
-                  >
-                    <option value="">Select Status</option>
-                    <option value="TO_DO">TO DO</option>
-                    <option value="IN_PROGRESS">IN PROGRESS</option>
-                    <option value="DONE">DONE</option>
-                  </select>
-                </div>
+                      <div className="form-group">
+                        <select
+                          className="form-control form-control-lg"
+                          name="status"
+                          value={this.state.status}
+                          onChange={this.onChange}
+                        >
+                          <option value="">Select Status</option>
+                          <option value="TO_DO">To Do</option>
+                          <option value="IN_PROGRESS">In Progress</option>
+                          <option value="DONE">Done</option>
+                          <option value="IDEA">Idea</option>
+                        </select>
+                      </div>
 
-                <button
-                  type="submit"
-                  className="btn btn-primary btn-block mt-4"
-                  onSubmit={this.onSubmit}
-                >
-                  Add
-                </button>
-              </form>
+                      <input
+                        type="submit"
+                        className="btn btn-dark mr-2 mt-4 mb-5"
+                      />
+
+                      <Link to={`/projectBoard/${id}`}>
+                        <button className="btn btn-light  mt-4 mb-5">
+                          Cancel
+                        </button>
+                      </Link>
+                    </form>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+        )}
+      </Spring>
     );
   }
 }

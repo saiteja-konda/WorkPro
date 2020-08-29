@@ -13,12 +13,41 @@ class Dashboard extends Component {
 
   render() {
     const { projects } = this.props.project;
-
+    let board;
+    const boardAlgorithm = (projects) => {
+      if (projects.length !== 0) {
+        return (
+          <div>
+            {projects.map((project) => (
+              <ProjectItem key={project.id} project={project} />
+            ))}
+          </div>
+        );
+      } else  {
+        return (
+          <Spring
+            from={{ opacity: 0 }}
+            to={{ opacity: 1 }}
+            config={{ delay: 500, duration: 500 }}
+          >
+            {(props) => (
+              <div style={props}>
+                <div className="alert alert-info text-center" role="alert">
+                  Oops! your Dashboard is Empty, Click on + to create project
+                </div>
+              </div>
+            )}
+          </Spring>
+        );
+      }
+    
+    };
+    board = boardAlgorithm(projects);
     return (
       <Spring
         from={{ opacity: 0 }}
         to={{ opacity: 1 }}
-        config={{ delay: 1000, duration: 1000 }}
+        config={{ delay: 500, duration: 500 }}
       >
         {(props) => (
           <div style={props}>
@@ -26,14 +55,12 @@ class Dashboard extends Component {
               <div className="container">
                 <div className="row">
                   <div className="col-md-12">
-                    <h1 className="h3 text-center">Your Projects</h1>
+                    <h1 className="h3 text-center text-white">Your Projects</h1>
                     <br />
                     <CreateProjectButton />
                     <br />
-                    <hr />
-                    {projects.map((project) => (
-                      <ProjectItem key={project.id} project={project} />
-                    ))}
+                    <hr className="style11" />
+                    {board}
                   </div>
                 </div>
               </div>

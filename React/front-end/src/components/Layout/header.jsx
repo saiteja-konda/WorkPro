@@ -51,25 +51,8 @@ class Header extends Component {
       </div>
     );
     const isUserNotAuthenticated = (
-      <div className="collapse navbar-collapse" id="mobile-nav">
-        <ul className="navbar-nav ml-auto">
-          <li className="nav-item">
-            <Link
-              className="nav-link  font-weight-bold text-light mr-1 "
-              to="/register"
-            >
-              Sign Up
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link
-              className="nav-link  font-weight-bold text-light "
-              to="/login"
-            >
-              Login
-            </Link>
-          </li>
-        </ul>
+      <div>
+        
       </div>
     );
     let headerLinks;
@@ -80,22 +63,16 @@ class Header extends Component {
       headerLinks = isUserNotAuthenticated;
     }
     return (
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-5">
-        <div className="container">
+      <div >
+      <nav className="navbar navbar-expand navbar-dark bg-dark mb-5">
+        <div className="container" style={{display:"flex", flexWrap:"wrap",justifyContent: "flex-start"  }}>
           <Link className="navbar-brand" to="/">
-            <span className="font-weight-bold">Project Management App</span>
+            <span className="font-weight-bold">Work Pro</span>
           </Link>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#mobile-nav"
-          >
-            <span className="navbar-toggler-icon" />
-          </button>
           {headerLinks}
         </div>
       </nav>
+      </div>
     );
   }
 }

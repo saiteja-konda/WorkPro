@@ -4,7 +4,11 @@ import { deleteProjectTask } from "../../../actions/backlogActions";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import ReactTooltip from "react-tooltip";
-import { EditOutlined,DeleteOutlined } from "@ant-design/icons";
+import {
+  EditOutlined,
+  DeleteOutlined,
+  ClockCircleOutlined,
+} from "@ant-design/icons";
 
 class ProjectTask extends Component {
   onDeleteClick(backlog_id, pt_id) {
@@ -14,65 +18,95 @@ class ProjectTask extends Component {
     const { project_task } = this.props;
     let priorityString;
     let priorityClass;
-    let color;
+    let cardbodyBg;
 
     if (project_task.priority === 1) {
       priorityClass = "text-light";
       priorityString = "HIGH";
-      color = "red";
+      cardbodyBg = "#fcb1b1";
     }
 
     if (project_task.priority === 2) {
       priorityClass = " text-light";
       priorityString = "MEDIUM";
-      color = "#f2d600";
+      cardbodyBg = "#f0f696";
     }
 
     if (project_task.priority === 3) {
       priorityClass = " text-light";
       priorityString = "LOW";
-      color = "#ff9f1a";
+      cardbodyBg = "#96f7d2";
+    }
+
+    if(project_task.priority === 4){
+
+      priorityClass = " text-light";
+      priorityString = "IDEA";
+      cardbodyBg = "#49beb7";
     }
 
     return (
-      <div className="card mb-1 bg-light">
+      <div className="card mb-2 ">
         <ReactTooltip place="bottom" type="dark" effect="float" />
         <div
           className={`card-header text-dark text-lowercase ${priorityClass}`}
         >
           {project_task.projectSequence} Priority: {priorityString}
         </div>
-        <div
-          className="col-2"
-          style={{
-            fontSize: "6px",
-            padding: "0px",
-            borderRadius: "10px",
-            backgroundColor: `${color}`,
-          }}
-        >
-          <span>&nbsp;&nbsp;</span>{" "}
-        </div>
-        <div className="card-body bg-light">
-          <h5 className="card-title">{project_task.summary}</h5>
-          <h5 className="card-text text-lowercase mb-2">
-            {project_task.acceptanceCriteria}
-          </h5>
-          <Link
-            data-tip="update"
-            to={`/updateProjectTask/${project_task.projectIdentifier}/${project_task.projectSequence}`}
-            className="btn btn-sm"
-          ><EditOutlined /></Link>
 
-          <button
-            className="btn btn-sm ml-1"
-            data-tip="Delete"
-            onClick={this.onDeleteClick.bind(
-              this,
-              project_task.projectIdentifier,
-              project_task.projectSequence
-            )}
-          ><DeleteOutlined /></button>
+        <div style={{ backgroundColor: `${cardbodyBg}` }}>
+          <div className="card-body">
+            <p
+              className="card-title"
+              style={{ fontSize: "16px", fontWeight: "bold" }}
+            >
+              {project_task.summary}
+            </p>
+            <p
+              className="card-text text-lowercase mb-2"
+              style={{ fontSize: "12px", fontWeight: "lighter" }}
+            >
+              {project_task.acceptanceCriteria}
+            </p>
+          </div>
+
+          {
+            // buttons
+          }
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-around",
+              marginBottom: "20px",
+            }}
+          >
+            <Link
+              data-tip="update"
+              to={`/updateProjectTask/${project_task.projectIdentifier}/${project_task.projectSequence}`}
+              className="btn btn-sm"
+            >
+              <EditOutlined />
+            </Link>
+
+            <button
+              className="btn btn-sm "
+              data-tip="Delete"
+              onClick={this.onDeleteClick.bind(
+                this,
+                project_task.projectIdentifier,
+                project_task.projectSequence
+              )}
+            >
+              <DeleteOutlined />
+            </button>
+            <button
+              className="btn btn-sm"
+              data-tip={` Due date ${project_task.dueDate}`}
+            >
+              <ClockCircleOutlined />
+            </button>
+          </div>
         </div>
       </div>
     );

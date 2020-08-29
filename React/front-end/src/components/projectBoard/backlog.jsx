@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ProjectTask from "./projectTask/projectTask";
 import { Spring } from "react-spring/renderprops";
-
+import { motion } from "framer-motion";
 class Backlog extends Component {
   state = {};
   render() {
@@ -30,9 +30,7 @@ class Backlog extends Component {
       if (tasks[i].props.project_task.status === "IDEA") {
         ideaItems.push(tasks[i]);
       }
-
     }
-    
 
     return (
       <div className="container">
@@ -41,7 +39,7 @@ class Backlog extends Component {
             //
           }
 
-          <div className="col-md-3">
+          <motion.div drag="x" className="col-md-3">
             <Spring
               from={{ opacity: 0 }}
               to={{ opacity: 1 }}
@@ -49,7 +47,10 @@ class Backlog extends Component {
             >
               {(props) => (
                 <div style={props}>
-                  <div style = {{backgroundColor:"#bfdcae"}}  className="card text-white mb-2">
+                  <div
+                    style={{ backgroundColor: "#bfdcae" }}
+                    className="card text-white mb-2"
+                  >
                     <div className="card-header">
                       <h5 className="card-title text-capitalize">To-Do list</h5>
                     </div>
@@ -58,12 +59,12 @@ class Backlog extends Component {
                 </div>
               )}
             </Spring>
-          </div>
+          </motion.div>
           {
             //
           }
 
-          <div className="col-md-3 ">
+          <motion.div drag="x" className="col-md-3 ">
             <Spring
               from={{ opacity: 0 }}
               to={{ opacity: 1 }}
@@ -71,20 +72,23 @@ class Backlog extends Component {
             >
               {(props) => (
                 <div style={props}>
-                  <div style = {{backgroundColor:"#81b214"}} className="card text-white mb-2">
+                  <div
+                    style={{ backgroundColor: "#81b214" }}
+                    className="card text-white mb-2"
+                  >
                     <div className="card-header">
-                    <h5 className="card-title text-capitalize">In Process</h5>
+                      <h5 className="card-title text-capitalize">In Process</h5>
                     </div>
                   </div>
                   {inProgressItems}
                 </div>
               )}
             </Spring>
-          </div>
+          </motion.div>
           {
             //
           }
-          <div className="col-md-3">
+          <motion.div drag="x" className="col-md-3">
             <Spring
               from={{ opacity: 0 }}
               to={{ opacity: 1 }}
@@ -92,20 +96,23 @@ class Backlog extends Component {
             >
               {(props) => (
                 <div style={props}>
-                  <div style = {{backgroundColor:"#206a5d" }} className="card text-white mb-2">
+                  <div
+                    style={{ backgroundColor: "#206a5d" }}
+                    className="card text-white mb-2"
+                  >
                     <div className="card-header">
-                    <h5 className="card-title text-capitalize">Done</h5>
+                      <h5 className="card-title text-capitalize">Done</h5>
                     </div>
                   </div>
                   {doneItems}
                 </div>
               )}
             </Spring>
-          </div>
+          </motion.div>
           {
             //
           }
-          <div className="col-md-3">
+          <motion.div drag="x" className="col-md-3">
             <Spring
               from={{ opacity: 0 }}
               to={{ opacity: 1 }}
@@ -113,17 +120,20 @@ class Backlog extends Component {
             >
               {(props) => (
                 <div style={props}>
-                  <div style = {{backgroundColor:"#ff8364" }} className="card text-white mb-2">
+                  <div
+                    style={{ backgroundColor: "#ff8364" }}
+                    className="card text-white mb-2"
+                  >
                     <div className="card-header">
-                    <h5 className="card-title text-capitalize">Ideas</h5>
+                      <h5 className="card-title text-capitalize">Ideas</h5>
                     </div>
                   </div>
                   {ideaItems}
                 </div>
               )}
             </Spring>
-          </div>
-          </div>
+          </motion.div>
+        </div>
       </div>
     );
   }

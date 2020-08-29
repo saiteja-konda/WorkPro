@@ -4,6 +4,8 @@ import { deleteProjectTask } from "../../../actions/backlogActions";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import ReactTooltip from "react-tooltip";
+import { motion } from "framer-motion";
+
 import {
   EditOutlined,
   DeleteOutlined,
@@ -46,7 +48,7 @@ class ProjectTask extends Component {
     }
 
     return (
-      <div className="card mb-2 ">
+      <motion.div drag="y" className="card mb-2 ">
         <ReactTooltip place="bottom" type="dark" effect="float" />
         <div
           className={`card-header text-dark text-lowercase ${priorityClass}`}
@@ -108,7 +110,7 @@ class ProjectTask extends Component {
             </button>
           </div>
         </div>
-      </div>
+      </motion.div>
     );
   }
 }
